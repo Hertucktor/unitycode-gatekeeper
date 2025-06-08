@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GateKeeper</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="form-container">
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('step1')">1. Persönliche Daten</button>
+            <button class="tab disabled" id="step2-tab" onclick="checkStep1BeforeOpen('step2')">2. Zugangsdaten</button>
+            <button class="tab disabled" id="login-tab" onclick="checkStep2BeforeOpen('login')">3. Anmeldung</button>
+        </div>
+
+        <!-- Schritt 1: Persönliche Daten -->
+        <div id="step1" class="form active">
+            <h2>Persönliche Daten</h2>
+            <p class="progress-info">Schritt 1 von 2 - Geben Sie Ihre persönlichen Daten ein</p>
+            <form id="personalDataForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Max Mustermann">
+                    <div id="name-error" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefon">Telefonnummer:</label>
+                    <input type="tel" id="telefon" name="telefon" required placeholder="+49 123 456789">
+                    <div id="telefon-error" class="error-message"></div>
+                </div>
+                
+                <button type="button" class="next-btn" onclick="validateStep1()">Weiter zu Zugangsdaten</button>
+            </form>
+        </div>
+
+        <!-- Schritt 2: Zugangsdaten -->
+        <div id="step2" class="form">
+            <h2>Zugangsdaten erstellen</h2>
+            <p class="progress-info">Schritt 2 von 2 - Legen Sie Benutzernamen und Passwort fest</p>
+            <form id="accountDataForm">
+                <div class="form-group">
+                    <label for="username">Benutzername:</label>
+                    <input type="text" id="username" name="username" required placeholder="Wählen Sie einen Benutzernamen">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Passwort:</label>
+                    <input type="password" id="password" name="password" required placeholder="Mindestens 8 Zeichen">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">Passwort bestätigen:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required placeholder="Passwort wiederholen">
+                </div>
+                
+                <button type="button" class="next-btn" onclick="validateAndRegister()">Registrierung abschließen</button>
+            </form>
+        </div>
+
+        <!-- Schritt 3: Anmeldung -->
+        <div id="login" class="form">
+            <h2>Anmeldung</h2>
+            <p class="progress-info">Melden Sie sich mit Ihren Zugangsdaten an</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-username">Benutzername:</label>
+                    <input type="text" id="login-username" name="username" required placeholder="Ihr Benutzername">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Passwort:</label>
+                    <input type="password" id="login-password" name="password" required placeholder="Ihr Passwort">
+                </div>
+                
+                <button type="button" onclick="validateLogin()">Anmelden</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Overlay für Popups -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Registrierungs-Erfolgs-Popup -->
+    <div class="popup" id="registrationPopup">
+        <h2>Registrierung erfolgreich!</h2>
+        <p>Sie können sich jetzt anmelden.</p>
+        <button onclick="closeRegistrationPopup()">OK</button>
+    </div>
+
+    <!-- Willkommens-Popup -->
+    <div class="popup" id="welcomePopup">
+        <h2>Willkommen!</h2>
+        <p>Sie haben sich erfolgreich angemeldet.</p>
+        <button onclick="closeWelcomePopup()">OK</button>
+    </div>
+</body>
+</html>
