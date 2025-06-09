@@ -22,13 +22,13 @@
             <form id="personalDataForm">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required placeholder="Max Mustermann">
+                    <input type="text" id="name" name="name" required>
                     <div id="name-error" class="error-message"></div>
                 </div>
                 
                 <div class="form-group">
                     <label for="telefon">Telefonnummer:</label>
-                    <input type="tel" id="telefon" name="telefon" required placeholder="+49 123 456789">
+                    <input type="tel" id="telefon" name="telefon" required>
                     <div id="telefon-error" class="error-message"></div>
                 </div>
                 
@@ -43,17 +43,17 @@
             <form id="accountDataForm">
                 <div class="form-group">
                     <label for="username">Benutzername:</label>
-                    <input type="text" id="username" name="username" required placeholder="Wählen Sie einen Benutzernamen">
+                    <input type="text" id="username" name="username" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Passwort:</label>
-                    <input type="password" id="password" name="password" required placeholder="Mindestens 8 Zeichen">
+                    <input type="password" id="password" name="password" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="confirm-password">Passwort bestätigen:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required placeholder="Passwort wiederholen">
+                    <input type="password" id="confirm-password" name="confirm-password" required>
                 </div>
                 
                 <button type="button" class="next-btn" onclick="validateAndRegister()">Registrierung abschließen</button>
@@ -67,12 +67,12 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="login-username">Benutzername:</label>
-                    <input type="text" id="login-username" name="username" required placeholder="Ihr Benutzername">
+                    <input type="text" id="login-username" name="username" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="login-password">Passwort:</label>
-                    <input type="password" id="login-password" name="password" required placeholder="Ihr Passwort">
+                    <input type="password" id="login-password" name="password" required>
                 </div>
                 
                 <button type="button" onclick="validateLogin()">Anmelden</button>
