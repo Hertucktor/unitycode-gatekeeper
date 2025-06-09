@@ -9,6 +9,9 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+.heading {
+    text-align: center;
+}
 .tabs {
     display: flex;
     margin-bottom: 20px;
