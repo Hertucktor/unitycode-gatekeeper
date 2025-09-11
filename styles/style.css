@@ -4,7 +4,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     background-color: #000100;
-    background-image: url('background-ufo-2.webp');
+    background-image: url('../assests/background-ufo-2.webp');
     background-size: cover;   
     background-repeat: no-repeat;
     background-position: center;
