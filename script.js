@@ -34,7 +34,7 @@ function openTab(tabId) {
 // Überprüft Schritt 1 bevor Schritt 2 geöffnet wird
 function checkStep1BeforeOpen(tabId) {
     if(!step1Validated) {
-        showAlert("Bitte zuerst die persönlichen Daten mit den Testdaten korrekt ausfüllen!");
+        showAlert("Bitte zuerst die persönlichen Daten korrekt ausfüllen!");
         return;
     }
     openTab(tabId);
@@ -54,110 +54,92 @@ function showAlert(message) {
     alert(message); // Bleibt als einfacher Alert für Fehlermeldungen
 }
 
-// Validierung von Schritt 1
-function validateStep1() {
-    const name = document.getElementById('name').value.trim();
-    const telefon = document.getElementById('telefon').value.trim();
+// wait for DOM to be loaded completely
+document.addEventListener('DOMContentLoaded', function() {
+    // Event Listener for form submit
+    document.getElementById('personalDataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            registerData();
+    });
+});
+
+
+function registerData() {
+    const formData = {
+        name:       document.getElementById('name').value.trim(),
+        mail:       document.getElementById('mail').value.trim(),
+        telefon:    document.getElementById('telefon').value.trim()
+    };
+
+    // validate
+    if (!validateForm(formData)) {
+        return false;
+    }
+
+    // send data to endpoint
+    fetch('0.0.0.0:8080/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application-json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Erfolg:', data);
+        //navigate to next site or show next step
+        alert('Registrierung erfolgreich!');
+    })
+    .catch((error) => {
+        console.error('Fehler:', error);
+        alert('Ein Fehler ist aufgetreten: ' + error.message);
+    });
+}
+
+function validateForm(data) {
     let isValid = true;
+
+    // reset error msgs
+    document.querySelectorAll('.error-message').forEach(el => {
+        el.textContent = '';
+    });
     
-    // Zurücksetzen der Fehlermeldungen
-    document.getElementById('name-error').textContent = '';
-    document.getElementById('telefon-error').textContent = '';
-    
-    // Name validieren
-    if(name !== "Max Mustermann") {
-        document.getElementById('name-error').textContent = 'Bitte geben Sie "Max Mustermann" ein';
+    // validate name
+    if (!data.name) {
+        document.getElementById('name-error').textContent = 'Name ist erforderlich';
         isValid = false;
     }
     
-    // Telefonnummer validieren
-    if(telefon !== "+49 123 456789") {
-        document.getElementById('telefon-error').textContent = 'Bitte geben Sie "+49 123 456789" ein';
+    // validate mail
+    if (!data.mail) {
+        document.getElementById('mail-error').textContent = 'E-Mail ist erforderlich';
+        isValid = false;
+    } else if (isValidEmail(data.mail)) {
+        document.getElementById('mail-error').textContent = 'Ungültige E-Mail-Adresse';
         isValid = false;
     }
     
-    if(isValid) {
-        step1Validated = true;
-        // Aktiviere den zweiten Tab
-        document.getElementById('step2-tab').classList.remove('disabled');
-        openTab('step2');
-    }
-}
-
-// Validierung und "Registrierung"
-function validateAndRegister() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-    
-    if(username === '') {
-        showAlert('Bitte geben Sie einen Benutzernamen ein!');
-        return;
+    // validate telefon
+    if (data.telefon && !isValidPhone(data.telefon)) {
+        document.getElementById('telefon-error').textContent = 'Ungültige Telefonnummer';
+        isValid = false;
     }
     
-    if(password !== confirmPassword) {
-        showAlert('Die Passwörter stimmen nicht überein!');
-        return;
-    }
-    
-    if(password.length < 8) {
-        showAlert('Das Passwort muss mindestens 8 Zeichen lang sein!');
-        return;
-    }
-    
-    // Speichere die Zugangsdaten für die spätere Anmeldung
-    storedUsername = username;
-    storedPassword = password;
-    step2Validated = true;
-    
-    // Aktiviere den Login-Tab
-    document.getElementById('login-tab').classList.remove('disabled');
-    
-    // Fülle die Anmeldedaten automatisch aus (nur zur Demo)
-    document.getElementById('login-username').value = username;
-    
-    // Zeige Registrierungs-Erfolgs-Popup
-    showRegistrationPopup();
+    return isValid
 }
 
-// Zeige Registrierungs-Erfolgs-Popup
-function showRegistrationPopup() {
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('registrationPopup').style.display = 'block';
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
 }
 
-// Schließe Registrierungs-Erfolgs-Popup
-function closeRegistrationPopup() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('registrationPopup').style.display = 'none';
-    openTab('login');
-}
-
-// Validierung der Anmeldedaten
-function validateLogin() {
-    const username = document.getElementById('login-username').value.trim();
-    const password = document.getElementById('login-password').value;
-    
-    if(username === '' || password === '') {
-        showAlert('Bitte geben Sie Benutzernamen und Passwort ein!');
-        return;
-    }
-    
-    if(username === storedUsername && password === storedPassword) {
-        showWelcomePopup();
-    } else {
-        showAlert('Falscher Benutzername oder Passwort!');
-    }
-}
-
-// Zeige Willkommens-Popup
-function showWelcomePopup() {
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('welcomePopup').style.display = 'block';
-}
-
-// Schließe Willkommens-Popup
-function closeWelcomePopup() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('welcomePopup').style.display = 'none';
+function isValidPhone(phone) {
+    //TODO: should be extended via JS-Plugin intl-tel-input or someting equal
+    const phoneRegex = /^[+\d][\d\s\-()]{5,}$/;
+    return phoneRegex.test(phone);
 }
