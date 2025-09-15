@@ -55,20 +55,23 @@ function showAlert(message) {
 }
 
 // wait for DOM to be loaded completely
-document.addEventListener('DOMContentLoaded', function() {
-    // Event Listener for form submit
-    document.getElementById('personalDataForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            registerData();
-    });
-});
+//document.addEventListener('DOMContentLoaded', function() {
+//    // Event Listener for form submit
+//    document.getElementById('personalDataForm').addEventListener('submit', function(event) {
+//            event.preventDefault();
+//            registerData();
+//    });
+//});
 
+function registerData(event) {
+    event.preventDefault();
 
-function registerData() {
     const formData = {
         name:       document.getElementById('name').value.trim(),
-        mail:       document.getElementById('mail').value.trim(),
-        telefon:    document.getElementById('telefon').value.trim()
+        email:       document.getElementById('email').value.trim(),
+        telefon:    document.getElementById('telefon').value.trim(),
+        username:    document.getElementById('username').value.trim(),
+        password:    document.getElementById('password').value.trim(),
     };
 
     // validate
@@ -77,10 +80,10 @@ function registerData() {
     }
 
     // send data to endpoint
-    fetch('0.0.0.0:8080/register', {
+    fetch('http://127.0.0.1:8080/register', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application-json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
     })
@@ -94,6 +97,8 @@ function registerData() {
         console.log('Erfolg:', data);
         //navigate to next site or show next step
         alert('Registrierung erfolgreich!');
+        // reset form
+        document.getElementById('personalDataForm').reset();
     })
     .catch((error) => {
         console.error('Fehler:', error);
@@ -115,12 +120,12 @@ function validateForm(data) {
         isValid = false;
     }
     
-    // validate mail
-    if (!data.mail) {
-        document.getElementById('mail-error').textContent = 'E-Mail ist erforderlich';
+    // validate email
+    if (!data.email) {
+        document.getElementById('email-error').textContent = 'E-Mail ist erforderlich';
         isValid = false;
-    } else if (isValidEmail(data.mail)) {
-        document.getElementById('mail-error').textContent = 'Ungültige E-Mail-Adresse';
+    } else if (!isValidEmail(data.email)) {
+        document.getElementById('email-error').textContent = 'Ungültige E-Mail-Adresse';
         isValid = false;
     }
     
@@ -133,13 +138,14 @@ function validateForm(data) {
     return isValid
 }
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//TODO: should be extended via JS-Plugin intl-tel-input or someting equal
+const phoneRegex = /^[+\d][\d\s\-()]{5,}$/;
+
 function isValidEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
 }
 
 function isValidPhone(phone) {
-    //TODO: should be extended via JS-Plugin intl-tel-input or someting equal
-    const phoneRegex = /^[+\d][\d\s\-()]{5,}$/;
     return phoneRegex.test(phone);
 }

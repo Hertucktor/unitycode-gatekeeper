@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateKeeper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <script src="script.js"></script>
 </head>
@@ -15,11 +16,10 @@
             <button class="tab disabled" id="step2-tab" onclick="checkStep1BeforeOpen('step2')">2. Zugangsdaten</button>
             <button class="tab disabled" id="login-tab" onclick="checkStep2BeforeOpen('login')">3. Anmeldung</button>
         </div>
-
         <!-- Schritt 1: Persönliche Daten -->
         <div id="step1" class="form active">
             <h2>Registrierung</h2>
-            <p class="progress-info">Schritt 1 von 2 - Gib deine  persönlichen Daten ein</p>
+            <p class="progress-info">Gib deine persönlichen Daten ein</p>
             <form id="personalDataForm" type="submit" onsubmit="registerData(event)">
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -27,23 +27,52 @@
                     <div id="name-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
-                    <label for="mail">E-Mail:</label>
-                    <input type="email" id="mail" name="mail" required>
-                    <div id="mail-error" class="error-message"></div>
+                    <label for="email">E-Mail:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="email-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="telefon">Telefonnummer: (optional)</label>
                     <input type="tel" id="telefon" name="telefon">
                     <div id="telefon-error" class="error-message"></div>
                 </div>
+            <p class="progress-info">Gib deine Nutzer Daten ein</p>
+                <div class="form-group">
+                    <label for="username">Nutzername:</label>
+                    <input type="text" id="username" name="username">
+                    <div id="username-error" class="error-message"></div>
+                </div>
+                <div class="form-group" style="position: relative;">
+                    <label for="password">Passwort:</label>
+                    <input type="password" id="password" name="password">
+                    <span id="togglePassword" style="position: absolute; right: 10px; top: 38px; cursor: pointer;">
+                        <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                    </span>
+                    <div id="password-error" class="error-message"></div>
+                </div>
+                <script>
+                    const passwordInput = document.getElementById('password');
+                const togglePassword = document.getElementById('togglePassword');
+                const toggleIcon = togglePassword.querySelector('i');
+
+                togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Icon ändern
+                if (type === 'text') {
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+                });
+                </script>
 
                 <div class="button-group">
                     <button type="submit" class="next-btn">Weiter zum Login</button>
                 </div>
-
-                <!--<div id="success-message" class="success-message">
-                    Registrierung erfolgreich abgeschlossen!
-                </div>-->
             </form>
         </div>
 
