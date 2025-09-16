@@ -2,11 +2,12 @@ function registerData(event) {
     event.preventDefault();
 
     const formData = {
-        name:       document.getElementById('name').value.trim(),
-        email:       document.getElementById('email').value.trim(),
-        telefon:    document.getElementById('telefon').value.trim(),
-        username:    document.getElementById('username').value.trim(),
-        password:    document.getElementById('password').value.trim(),
+        name:               document.getElementById('name').value.trim(),
+        email:              document.getElementById('email').value.trim(),
+        telefon:            document.getElementById('telefon').value.trim(),
+        username:           document.getElementById('username').value.trim(),
+        password:           document.getElementById('password').value.trim(),
+        confirmPassword:    document.getElementById('register-confirm-password').value.trim(),
     };
 
     // validate
@@ -69,6 +70,19 @@ function validateForm(data) {
         document.getElementById('telefon-error').textContent = 'Ungültige Telefonnummer';
         isValid = false;
     }
+
+    // validate password
+    if (!data.password || data.password.length < 15) {
+        document.getElementById('password-error').textContent = 'Das Passwort muss mindestens 15 Zeichen lang sein.';
+        isValid = false;
+    }
+
+    // validate password confirmation
+    if (data.confirmPassword !== data.password) {
+        document.getElementById('register-confirm-password-error').textContent = 'Die Passwörter stimmen nicht überein.';
+        isValid = false;
+    }
+
     
     return isValid
 }
