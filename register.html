@@ -37,37 +37,18 @@
             <p class="progress-info">Gib deine Nutzer Daten ein</p>
                 <div class="form-group">
                     <label for="username">Nutzername:</label>
-                    <input type="text" id="username" name="username">
+                    <input type="text" id="username" name="username" required>
                     <div id="username-error" class="error-message"></div>
                 </div>
                 <div class="form-group" style="position: relative;">
                     <label for="password">Passwort:</label>
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" required>
                     <span id="togglePassword" style="position: absolute; right: 10px; top: 38px; cursor: pointer;">
                         <i class="fa-solid fa-eye" aria-hidden="true"></i>
                     </span>
                     <div id="password-error" class="error-message"></div>
                 </div>
-                <script>
-                const passwordInput = document.getElementById('password');
-                const togglePassword = document.getElementById('togglePassword');
-                const toggleIcon = togglePassword.querySelector('i');
-
-                togglePassword.addEventListener('click', function () {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                
-                // Icon ändern
-                if (type === 'text') {
-                    toggleIcon.classList.remove('fa-eye');
-                    toggleIcon.classList.add('fa-eye-slash');
-                } else {
-                    toggleIcon.classList.remove('fa-eye-slash');
-                    toggleIcon.classList.add('fa-eye');
-                }
-                });
-                </script>
-
+                <script src="js/toggle.js"></script>
                 <div class="button-group">
                     <button type="submit" class="next-btn">Registrieren</button>
                 </div>
