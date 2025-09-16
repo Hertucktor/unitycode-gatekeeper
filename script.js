@@ -54,15 +54,6 @@ function showAlert(message) {
     alert(message); // Bleibt als einfacher Alert für Fehlermeldungen
 }
 
-// wait for DOM to be loaded completely
-//document.addEventListener('DOMContentLoaded', function() {
-//    // Event Listener for form submit
-//    document.getElementById('personalDataForm').addEventListener('submit', function(event) {
-//            event.preventDefault();
-//            registerData();
-//    });
-//});
-
 function registerData(event) {
     event.preventDefault();
 
