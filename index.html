@@ -4,98 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateKeeper</title>
+    <link rel="Icon" type="image/x-icon" href="images/UC_Logo.ico">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="styles/style.css">
-    <script src="script.js"></script>
 </head>
 <body>
-    <div class="form-container">
-        <h1 class="heading">Unity Code Techno</h1>
-        <div class="tabs">
-            <button class="tab active" onclick="openTab('step1')">1. Persönliche Daten</button>
-            <button class="tab disabled" id="step2-tab" onclick="checkStep1BeforeOpen('step2')">2. Zugangsdaten</button>
-            <button class="tab disabled" id="login-tab" onclick="checkStep2BeforeOpen('login')">3. Anmeldung</button>
-        </div>
-
-        <!-- Schritt 1: Persönliche Daten -->
-        <div id="step1" class="form active">
-            <h2>Persönliche Daten</h2>
-            <p class="progress-info">Schritt 1 von 2 - Gib deine  persönlichen Daten ein</p>
-            <form id="personalDataForm">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    <div id="name-error" class="error-message"></div>
+    <style>
+        /* Basis-Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #f1f1f1;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #8c52ff, #5ce1e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+            color: #8c52ff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #8c52ff, #5ce1e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #ccc;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #8c52ff, #5ce1e6);
+            color: #0a0a0a;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(140, 82, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #f1f1f1;
+            border: 2px solid #8c52ff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(140, 82, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background-color: #111;
+        }
+        
+        .features h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #f1f1f1;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #222;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(140, 82, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #8c52ff;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #f1f1f1;
+        }
+        
+        .feature-card p {
+            color: #aaa;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+        
+        footer p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        /* Formulare (ausgeblendet) */
+        .auth-forms {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt logo-icon"></i>
+                <h1>Unitycode</h1>
+            </div>
+        </header>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Sichere Zugangskontrolle für Ihre digitale Welt</h2>
+                <p>GateKeeper bietet höchste Sicherheitsstandards für den Schutz Ihrer sensiblen Daten und Systeme. Einfach, intuitiv und absolut zuverlässig.</p>
+                
+                <div class="cta-buttons">
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Zum Login
+                    </a>
+                    <a href="register.html" class="btn btn-secondary">
+                        <i class="fas fa-user-plus"></i> Registrieren
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="features">
+            <h3>Ihre Vorteile mit GateKeeper</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Maximale Sicherheit</h4>
+                    <p>State-of-the-art Verschlüsselungstechnologie schützt Ihre Daten vor unbefugtem Zugriff.</p>
                 </div>
                 
-                <div class="form-group">
-                    <label for="telefon">Telefonnummer:</label>
-                    <input type="tel" id="telefon" name="telefon" required>
-                    <div id="telefon-error" class="error-message"></div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Höchste Performance</h4>
+                    <p>Schnelle Authentifizierung ohne Kompromisse bei der Sicherheit.</p>
                 </div>
                 
-                <button type="button" class="next-btn" onclick="validateStep1()">Weiter zu Zugangsdaten</button>
-            </form>
-        </div>
-
-        <!-- Schritt 2: Zugangsdaten -->
-        <div id="step2" class="form">
-            <h2>Zugangsdaten erstellen</h2>
-            <p class="progress-info">Schritt 2 von 2 - Leg deinen Benutzernamen und Passwort fest</p>
-            <form id="accountDataForm">
-                <div class="form-group">
-                    <label for="username">Benutzername:</label>
-                    <input type="text" id="username" name="username" required>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Mehrstufige Authentifizierung</h4>
+                    <p>Mehrere Sicherheitsebenen sorgen für optimalen Schutz Ihrer Accounts.</p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="password">Passwort:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirm-password">Passwort bestätigen:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required>
-                </div>
-                
-                <button type="button" class="next-btn" onclick="validateAndRegister()">Registrierung abschließen</button>
-            </form>
-        </div>
-
-        <!-- Schritt 3: Anmeldung -->
-        <div id="login" class="form">
-            <h2>Anmeldung</h2>
-            <p class="progress-info">Melde dich mit deinen Zugangsdaten an</p>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="login-username">Benutzername:</label>
-                    <input type="text" id="login-username" name="username" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="login-password">Passwort:</label>
-                    <input type="password" id="login-password" name="password" required>
-                </div>
-                
-                <button type="button" onclick="validateLogin()">Anmelden</button>
-            </form>
-        </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 Unitycode Techno. Alle Rechte vorbehalten.</p>
+            <p>Datenschutz | Impressum | AGB</p>
+        </footer>
     </div>
 
-    <!-- Overlay für Popups -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Registrierungs-Erfolgs-Popup -->
-    <div class="popup" id="registrationPopup">
-        <h2>Registrierung erfolgreich!</h2>
-        <p>Du kannst dich jetzt anmelden.</p>
-        <button onclick="closeRegistrationPopup()">OK</button>
-    </div>
-
-    <!-- Willkommens-Popup -->
-    <div class="popup" id="welcomePopup">
-        <h2>Willkommen!</h2>
-        <p>Du hast dich erfolgreich angemeldet.</p>
-        <button onclick="closeWelcomePopup()">OK</button>
-    </div>
+    <script>
+        // Einfache Animation beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroContent = document.querySelector('.hero-content');
+            heroContent.style.opacity = '0';
+            heroContent.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                heroContent.style.transition = 'opacity 1s ease, transform 1s ease';
+                heroContent.style.opacity = '1';
+                heroContent.style.transform = 'translateY(0)';
+            }, 300);
+            
+            // Feature Cards nacheinander animieren
+            const features = document.querySelectorAll('.feature-card');
+            features.forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    feature.style.transition = `opacity 0.5s ease ${index * 0.2}s, transform 0.5s ease ${index * 0.2}s`;
+                    feature.style.opacity = '1';
+                    feature.style.transform = 'translateY(0)';
+                }, 500);
+            });
+        });
+    </script>
 </body>
 </html>

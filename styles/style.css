@@ -1,10 +1,10 @@
-body {
+body{
     font-family: Arial, sans-serif;
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
     background-color: #000100;
-    background-image: url('../assests/background-ufo-2.webp');
+    background-image: url('../images/background-ufo-2.webp');
     background-size: cover;   
     background-repeat: no-repeat;
     background-position: center;
