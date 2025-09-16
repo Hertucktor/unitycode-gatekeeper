@@ -3,7 +3,7 @@ function loginData(event) {
 
     const formData = {
         username:    document.getElementById('username').value.trim(),
-        password:    document.getElementById('password').value.trim(),
+        password:    document.getElementById('login-password').value.trim(),
     };
 
     // validate
