@@ -127,3 +127,17 @@ button[type="submit"]:hover, .next-btn:hover {
     z-index: 999;
     display: none;
 }
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #999;
+}
+
+.form-footer a {
+    color: #8c52ff;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
