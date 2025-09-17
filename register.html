@@ -11,12 +11,16 @@
 </head>
 <body>
     <div class="form-container">
-        <h1 class="heading">Unity Code Techno</h1>
-        <div class="tabs">
-            <p class="tab active">Registrierung</p>
+        <div class="form-header">
+            <div class="form-image">
+                <a href="/index.html">
+                    <img class="form-logo" src="images/UC_Logo.png" alt="Logo of Unity Code Techno">
+                </a>
+            </div>
         </div>
+        <h1 class="form-heading">Registrierung</h1>
         <!-- Registrierung Daten -->
-        <div id="step1" class="form active">
+        <div class="form">
             <p class="progress-info">Gib deine persönlichen Daten ein</p>
             <form id="personalDataForm" type="submit" onsubmit="registerData(event)">
                 <div class="form-group">
@@ -37,7 +41,7 @@
                     <div id="telefon-error" class="error-message"></div>
                 </div>
             
-                <p class="progress-info">Gib deine Nutzer Daten ein</p>
+                <p class="progress-info">Gib deine Nutzerdaten ein</p>
                 
                 <div class="form-group">
                     <label for="username">Nutzername:</label>
